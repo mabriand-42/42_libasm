@@ -4,8 +4,8 @@ section	.text
 	extern	ft_strlen			;import ft_strlen()
 	extern	ft_strcpy			;import ft_strcpy()
 
-;char	*ft_strdup(const char *str)
-;rax	ft_strdup(rdi)
+;char	*ft_strdup(const char *str);
+;rax	ft_strdup(rdi);
 
 ft_strdup:
 	XOR		rax, rax			;initialize rax at 0

@@ -3,8 +3,8 @@ section	.text
 	global ft_read
 	extern __errno_location
 
-;ssize_t	ft_read(int fd, void *buf, size_t count)
-;rax		ft_read(rdi, rsi, rdx)
+;ssize_t	ft_read(int fd, void *buf, size_t count);
+;rax		ft_read(rdi, rsi, rdx);
 
 ft_read:
 	XOR		rax, rax

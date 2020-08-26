@@ -2,8 +2,8 @@ section	.text
 	global ft_write
 	extern __errno_location
 
-;ssize_t	ft_write(int fd, const void *buf, size_t count)
-;rax		ft_write(rdi, rsi, rdx)
+;ssize_t	ft_write(int fd, const void *buf, size_t count);
+;rax		ft_write(rdi, rsi, rdx);
 
 ft_write:
 	XOR		rax, rax

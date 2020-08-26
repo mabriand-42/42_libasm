@@ -10,7 +10,7 @@ ft_strlen:
 	JMP		comp				;jump to the comp label
 
 incr:
-	INC	rcx;					;increment rcx
+	INC		rcx;				;increment rcx
 
 comp:
 	CMP		byte[rdi + rcx], 0	;compare the byte at str[rcx] to 0

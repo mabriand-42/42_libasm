@@ -11,7 +11,7 @@ ft_list_size:
 
 incr:
 	INC		rax
-			
+
 ;count:
 ;	CMP		rdi, 0			;check if begin_list is a null pointer
 ;	JZ		return			;jump to the return label if so

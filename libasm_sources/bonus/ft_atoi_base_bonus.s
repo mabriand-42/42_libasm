@@ -9,7 +9,7 @@ ft_atoi_base:
 		;PUSH	r12							;save base length
 	XOR		rax, rax				;initialize rax(i.e. the return value) at 0
 	XOR		rbx, rbx				;initialize rbx(i.e. the sign) at 0
-	XOR		r12, r12				;initialize r12(i.e. the base length) at 0
+	XOR		r12, r12				;initialize r12(i.e. the base length) at 0 (i = 0)
 	JMP		base_loop
 
 base_incr:
@@ -21,7 +21,7 @@ base_loop:
 	MOV		r8, r12					;else r8 receives the value of r12 (j = i)
 
 base_check_dup_inc:
-	INC		r8						;j++
+	INC		r8						;increment r8 (j++)
 
 base_check_dup_loop:
 	CMP		BYTE [rsi + r8], 0		;chek if base[r8] == '\0'
@@ -53,11 +53,11 @@ base_check:
 base_end:
 	CMP		r12, 1					;check if base_length <= 1 (if so, it means the base is not valid)
 	JLE		set_rax					;if lower or equal, jump to the set_rax label
-	XOR		r8, r8					;else initialize r8 at 0
+	XOR		r8, r8					;else initialize r8 at 0 (i = 0)
 	JMP		skip_white				;jump to the skip_white label
 
 skip_incr:
-			inc		r8				;i++
+	INC		r8						;i++
 
 skip_white:
 	CMP		BYTE [rdi + r8], 32		;check if str[i] == ' '

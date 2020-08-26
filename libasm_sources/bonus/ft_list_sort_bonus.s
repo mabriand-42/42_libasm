@@ -1,55 +1,65 @@
-			section	.text
-			global	ft_list_sort
+section	.text
+	global	ft_list_sort
 
-; delete RCX, R8 and RAX
+;void	ft_list_sort(t_list **begin_list, int (*cmp)());
+;int	(*cmp)(list_ptr->data, other_list_ptr->data);
+;rax	ft_list_sort(rdi, rsi);
 
-_ft_list_sort:							; rdi = t_list **begin, rsi = int (*cmp)(d1, d2)
-			push	rbx					; save rbx (next)
-			push	r12					; save r12 (first)
-			cmp		rdi, 0				; begin == NULL
-			jz		restore
-			mov		r12, [rdi]			; first = *begin
-			cmp		rsi, 0				; cmp == NULL
-			jz		return
-			jmp		compare_main
-increment_main:
-			mov		rcx, [rdi]
-			mov		rbx, [rcx + 8]
-			mov		[rdi], rbx			; *begin = (*begin)->next
-compare_main:
-			cmp		QWORD [rdi], 0		; !*begin
-			jz		return
-			mov		rcx, [rdi]
-			mov		rbx, [rcx + 8]		; current = (*begin)->next
-compare_single:
-			cmp		rbx, 0				; !current
-			jz		increment_main
+ft_list_sort:
+	PUSH	rbx					;save rbx (next)
+	PUSH	r12					;save r12 (first)
+	CMP		rdi, 0				;check if rdi == NULL
+	JZ		restore				;if equal, jump to the restore label
+	MOV		r12, [rdi]			;else r12 receives the adress of rdi (first = *begin)
+	CMP		rsi, 0				;check if rsi == NULL
+	JZ		return				;if equal, jump to the return label
+	JMP		compare_main		;else jump to the comp_main label
+
+incr_main:
+	MOV		rcx, [rdi]
+	MOV		rbx, [rcx + 8]
+	MOV		[rdi], rbx			;*begin = (*begin)->next
+
+comp_main:
+	CMP		QWORD [rdi], 0		;check if the adress of rdi = NULL (*begin == NULL) (!*begin)
+	JZ		return				;if equal, jump to the return label
+	MOV		rcx, [rdi]			;rcx receives the adress of rdi
+	MOV		rbx, [rcx + 8]		;current = (*begin)->next
+
+comp_single:
+	CMP		rbx, 0				; !current
+	JZ		incr_main
+
 compare:
-			push	rdi
-			push	rsi
-			mov		rax, rsi
-			mov		rcx, [rdi]
-			mov		rdi, [rcx]			; rdi = (*begin)->data
-			mov		rsi, [rbx]			; rsi = current->data
-			call	rax					; (*cmp)((*begin)->data, current->data)
-			pop		rsi
-			pop		rdi
-			cmp		rax, 0				; cmp > 0
-			jg		swap
-increment_single:
-			mov		rcx, [rbx + 8]
-			mov		rbx, rcx			; current = current.next
-			jmp		compare_single
+	PUSH	rdi					;save rdi
+	PUSH	rsi					;save rsi
+	MOV		rax, rsi
+	MOV		rcx, [rdi]
+	MOV		rdi, [rcx]			;rdi = (*begin)->data
+	MOV		rsi, [rbx]			;rsi = current->data
+	CALL	rax					;(*cmp)((*begin)->data, current->data)
+	POP		rsi
+	POP		rdi
+	CMP		rax, 0				;check if rax > 0
+	JG		swap				;if superior, jump to the swap label
+
+incr_single:
+	MOV		rcx, [rbx + 8]
+	MOV		rbx, rcx			;current = current.next
+	JMP		comp_single
+
 swap:
-			mov		r8, [rdi]
-			mov		rcx, [r8]			; rcx = (*begin)->data
-			mov		rax, [rbx]			; rax = current->data
-			mov		[r8], rax			; (*begin)->data = current->data
-			mov		[rbx], rcx			; current->data = (*begin)->data
-			jmp		increment_single
+	MOV		r8, [rdi]
+	MOV		rcx, [r8]			;rcx = (*begin)->data
+	MOV		rax, [rbx]			;rax = current->data
+	MOV		[r8], rax			;(*begin)->data = current->data
+	MOV		[rbx], rcx			;current->data = (*begin)->data
+	JMP		incr_single
+
 return:
-			mov		[rdi], r12			; *begin = first
+	MOV		[rdi], r12			;the adress of rdi receives the value of r12 (*begin = first)
+
 restore:
-			pop		r12					; restore r12
-			pop		rbx					; restore rbx
-			ret
+	POP		r12					;restore r12
+	POP		rbx					;restore rbx
+	RET

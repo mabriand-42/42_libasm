@@ -1,80 +1,90 @@
-		section	.text
-			global	ft_list_remove_if
-			extern	free
+section	.text
+	global	ft_list_remove_if
+	extern	free
 
-; delete RDI, R8 and everything that RDX, RCX and free destroy
+;void	ft_list_remove_if(t_list **begin_list, void *data_ref, int (*cmp)(), void (*free_fct)(void *));
+;int	(*cmp)(list_ptr->data, data_ref);
+;void	(*free_fct)(list_ptr->data);
+;rax	ft_list_remove_if(rdi, rsi, rdx, rcx);
 
-_ft_list_remove_if:						; rdi = t_list **begin, rsi = *data_ref
-										; rdx = int (*cmp)(data, data_ref), rcx = void (*free_fct)(data)
-			push	rbp					; save rbp (tmp)
-			push	rbx					; save rbx (previous)
-			push	r12					; save r12 (first)
-			mov		r12, [rdi]			; first = *begin
-			xor		rbx, rbx			; previous = NULL
-			cmp		rdi, 0				; begin == NULL
-			jz		return
-			cmp		rdx, 0
-			jz		return
-			cmp		rcx, 0
-			jz		return
-			jmp		compare_start
+ft_list_remove_if:
+	PUSH	rbp					;save rbp (tmp)
+	PUSH	rbx					;save rbx (previous)
+	PUSH	r12					;save r12 (first)
+	MOV		r12, [rdi]			;r12 receives the adress of rdi (first = *begin)
+	XOR		rbx, rbx			;initialize rbx at 0 (previous = NULL)
+	CMP		rdi, 0				;check if begin == NULL
+	JZ		return				;if equal, jump to the return label
+	CMP		rdx, 0				;check if cmp == NULL
+	JZ		return				;if equal, jump to the return label
+	CMP		rcx, 0				;check if free_fct == NULL
+	JZ		return				;if equal, jump to the return label
+	JMP		comp_start			;jump to the compare_start
+
 free_elt:
-			mov		r8, [rdi]
-			mov		rbp, [r8 + 8]		; tmp = (*begin)->next
-			push	rsi
-			push	rdx
-			push	rcx
-			push	rdi
-			mov		rdx, [rdi]
-			mov		rdi, [rdx]
-			call	rcx					; (*free_fct)((*begin)->data)
-			pop		rdi
-			push	rdi
-			mov		rdx, [rdi]
-			mov		rdi, rdx
-			call	_free				; free(*begin)
-			pop		rdi
-			pop		rcx
-			pop		rdx
-			pop		rsi
-			mov		[rdi], rbp			; *begin = tmp
-			cmp		rbx, 0				; previous == NULL
-			jnz		set_previous_next
-			mov		r12, rbp			; first == tmp
-			jmp		compare_start
-set_previous_next:
-			mov		[rbx + 8], rbp		; previous.next = tmp
-			jmp		compare_start
-compare_null:
-			xor		rdi, rsi
-			mov		rax, rdi
-			jmp		compare_end
+	MOV		r8, [rdi]
+	MOV		rbp, [r8 + 8]		;tmp = (*begin)->next
+	PUSH	rsi
+	PUSH	rdx
+	PUSH	rcx
+	PUSH	rdi
+	MOV		rdx, [rdi]
+	MOV		rdi, [rdx]
+	CALL	rcx					;(*free_fct)((*begin)->data)
+	POP		rdi
+	PUSH	rdi
+	MOV		rdx, [rdi]
+	MOV		rdi, rdx
+	CALL	_free				;free(*begin)
+	POP		rdi
+	POP		rcx
+	POP		rdx
+	POP		rsi
+	MOV		[rdi], rbp			;*begin = tmp
+	CMP		rbx, 0				;previous == NULL
+	JNZ		set_prev_next
+	MOV		r12, rbp			;first == tmp
+	JMP		compare_start
+
+set_prev_next:
+	MOV		[rbx + 8], rbp		;previous.next = tmp
+	JMP		compare_start
+
+comp_null:
+	XOR		rdi, rsi			;///////////////////////////////////////////////////////
+	MOV		rax, rdi
+	JMP		comp_end
+
 move_next:
-			mov		rbx, [rdi]
-			mov		r8,	[rbx + 8]		; tmp = (*begin)->next
-			mov		[rdi], r8			; *begin = tmp
-compare_start:
-			cmp		QWORD [rdi], 0		; *begin == NULL
-			jz		return
-			push	rdi
-			push	rsi					; data_ref already in rsi
-			push	rdx
-			push	rcx
-			mov		r8, [rdi]
-			mov		rdi, [r8]			; (*begin)->data in rdi
-			cmp		rdi, 0				; (*begin)->data == NULL
-			jz		compare_null
-			call	rdx					; (*cmp)((*begin)->data, data_ref)
-compare_end:
-			pop		rcx
-			pop		rdx
-			pop		rsi
-			pop		rdi
-			cmp		rax, 0				; (*cmp) == 0
-			jz		free_elt			; (*free_fct)
-			jmp		move_next
+	MOV		rbx, [rdi]
+	MOV		r8,	[rbx + 8]		;tmp = (*begin)->next
+	MOV		[rdi], r8			;*begin = tmp
+
+comp_start:
+	CMP		QWORD [rdi], 0		;check if *begin == NULL
+	JZ		return				;if equal, jump to the return label
+	PUSH	rdi
+	PUSH	rsi					;data_ref already in rsi
+	PUSH	rdx
+	PUSH	rcx
+	MOV		r8, [rdi]
+	MOV		rdi, [r8]			;(*begin)->data in rdi
+	CMP		rdi, 0				;(*begin)->data == NULL
+	JZ		comp_null
+	CALL	rdx					;(*cmp)((*begin)->data, data_ref)
+
+comp_end:
+	POP		rcx
+	POP		rdx
+	POP		rsi
+	POP		rdi
+	CMP		rax, 0				;(*cmp) == 0
+	JZ		free_elt			;(*free_fct)
+	JMP		move_next
+
 return:
-			mov		[rdi], r12			; *begin = first
-			pop		r12					; restore rbx
-			pop		rbx					; restore rbx
-			pop		rbp					
+	MOV		[rdi], r12			; *begin = first
+	POP		r12					; restore rbx
+	POP		rbx					; restore rbx
+	POP		rbp
+	RET
