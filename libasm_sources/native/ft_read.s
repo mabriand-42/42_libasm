@@ -7,7 +7,7 @@ section	.text
 ;rax		ft_read(rdi, rsi, rdx)
 
 ft_read:
-	XOR		rax, rax	
+	XOR		rax, rax
 	MOV		rax, 0
 	SYSCALL
 	CMP		rax, 0
