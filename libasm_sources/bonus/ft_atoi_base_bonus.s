@@ -5,25 +5,26 @@ section	.text
 ;rax	ft_atoi_base(rdi, rsi)
 
 ft_atoi_base:
-	PUSH	rbx						;save sign
-	PUSH	r12						;save base length)
-	XOR		rax, rax				; total = 0
-	XOR		rbx, rbx				; sign = 0
-	XOR		r12, r12				; base_length = 0
+		;PUSH	rbx						;save sign
+		;PUSH	r12						;save base length)
+	XOR		rax, rax			;initialize rax(i.e. the return value) at 0
+	XOR		rbx, rbx			;initialize rbx(i.e. the sign) at 0
+	XOR		r12, r12			;initialize r12(i.e. the base length) at 0
 	JMP		base_check_loop
 
 base_check_increment:
-			inc		r12						; base_length++
+			inc		r12				; base_length++
 
 base_check_loop:
-			cmp		BYTE [rsi + r12], 0
-			jz		base_check_end
-			mov		r8, r12					; j = base_length
+	CMP		BYTE [rsi + r12], 0	;check if rsi[r12] == '\0'
+	JZ		base_check_end		;if equal, jump to base_check_end layer
+	MOV		r8, r12				;r8 receives the value of r12 (j = i)
 
 base_check_dup_inc:
-			inc		r8						; j++
+	INC		r8					;j++
+
 base_check_dup_loop:
-			cmp		BYTE [rsi + r8], 0		; !base[j]
+	CMP	BYTE [rsi + r8], 0		; !base[j]
 			jz		base_check_correct
 			mov		r9b, [rsi + r8]
 			cmp		BYTE [rsi + r12], r9b	; base[base_length] == base[j]

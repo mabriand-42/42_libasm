@@ -1,5 +1,4 @@
 section	.text
-	section .text
 	global ft_write
 	extern __errno_location
 
@@ -7,7 +6,7 @@ section	.text
 ;rax		ft_write(rdi, rsi, rdx)
 
 ft_write:
-	XOR		rax, rax	
+	XOR		rax, rax
 	MOV		rax, 1
 	SYSCALL
 	CMP		rax, 0

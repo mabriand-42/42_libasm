@@ -15,16 +15,14 @@ comp:
 	ADD 	al, byte[rdi + rcx]	;al = al + byte[rdi + rcx]
 	JZ		incr				;if al equals , jump to the incr label
 	MOVSX	rax, al				;if not, al is copied in rax (even though it is < to the latest:
-								;remaning bytes in rax are filled with the extension of the signs
+								;remaning bytes in rax are filled with the extension of the signs)
 	RET							;return rax
 
 incr:
-	INC 	rcx					;increment rcx
-	CMP 	BYTE[rdi + rcx], 0	;check if rdi[rcx] != \0 -> jump to incr layer
-	JNZ 	comp
-	CMP 	BYTE[rsi + rcx], 0	;check if rsi[rcx] != \0 -> jump to diff_bellow
-	JNZ		comp
-	MOV 	rax, 0
+	INC		rcx					;increment rcx
+	CMP		BYTE[rdi + rcx], 0	;check if rdi[rcx] == '\0'
+	JNZ		comp				;if not equal, jump to comp layer
+	CMP		BYTE[rsi + rcx], 0	;else check if rsi[rcx] == '\0'
+	JNZ		comp				;if not equal, jump to comp layer
+	MOV		rax, 0				;else rax receives the value 0
 	RET
-
-

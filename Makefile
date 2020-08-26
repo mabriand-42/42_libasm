@@ -6,7 +6,7 @@
 #    By: vmoreau <vmoreau@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/04/20 13:11:26 by vmoreau           #+#    #+#              #
-#    Updated: 2020/04/24 19:56:42 by vmoreau          ###   ########.fr        #
+#    Updated: 2020/08/26 14:11:41 by mabriand         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -49,13 +49,13 @@ EXEBO = exebo
 all : $(NAME)
 
 .s.o:
-	nasm -f elf64 $^
+	nasm -f macho64 $^
 
 $(NAME) : $(OBJS) 
 	ar rcs $(NAME) $(OBJS)
 
 run : $(NAME)
-	$(CC) -no-pie $(CFLAGS) main.c -L ./ -lasm -o $(EXE)
+	$(CC) $(CFLAGS) main.c -L ./ -lasm -o $(EXE)
 	./exe
 
 $(NAME_BO) : $(OBJS) $(OBJSBO) 

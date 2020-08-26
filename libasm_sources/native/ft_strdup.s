@@ -8,14 +8,14 @@ section	.text
 ;rax	ft_strdup(rdi)
 
 ft_strdup:
-	XOR 	rax, rax			;initialize rax at 0
+	XOR		rax, rax			;initialize rax at 0
 	XOR		rbx, rbx			;initialize rbx (i.e. a general register) at 0
 
 size:
 	CALL	ft_strlen
 	MOV		rbx, rdi			;rbx receives the value of rdi (the parameter of ft_strdup())
 	JMP		crea				;jump to the crea label
-	
+
 crea:
 	INC		rax					;add 1 to the size for the null character
 	MOV		rdi, rax			;rdi receives the value of rax
@@ -29,5 +29,5 @@ copy:
 	MOV		rdi, rax			;rdi receives the value of rax (= the newly allocated string)
 	MOV		rsi, rbx			;rsi receives the value of rbx (= the string to copy)
 	XOR		rax, rax			;re-initialize rax at 0
-	CALL 	ft_strcpy
+	CALL	ft_strcpy
 	RET
