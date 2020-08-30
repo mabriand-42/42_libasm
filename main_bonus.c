@@ -23,51 +23,6 @@
 ** Useful functions
 */
 
-t_list	*list_new(void *data)
-{
-	t_list		*lst;
-
-	if (!(lst = malloc(sizeof(t_list))))
-		return (NULL);
-	lst->data = data;
-	lst->next = NULL;
-	return (lst);
-}
-
-void	list_add_back(t_list **alst, t_list *new)
-{
-	t_list	*tmp;
-
-	if (!alst || !new)
-		return ;
-	if (*alst)
-	{
-		tmp = *alst;
-		while (tmp->next)
-			tmp = tmp->next;
-		tmp->next = new;
-	}
-	else
-		*alst = new;
-}
-
-void	ft_lstclear(t_list **list)
-{
-	t_list	*tmp;
-
-	while (*list)
-	{
-		tmp = (*list)->next;
-		if ((*list)->data)
-			free((*list)->data);
-		if (*list)
-		{
-			free(*list);
-			*list = tmp;
-		}
-	}
-}
-
 void	ft_print_list(t_list *list)
 {
 	while (list)
@@ -153,9 +108,9 @@ void	ft_check_list_size(void)
 	
 	printf("\n%s===> Done!%s", BGREEN, NC);
 
-	free(list.data);
-	free(list_next.data);
-	free(list_last.data);
+	//free(list.data);
+	//free(list_next.data);
+	//free(list_last.data);
 	return ;
 }
 
@@ -188,9 +143,9 @@ void	ft_check_list_push_front(void)
 	printf("\n%sadded:%s `%s` | ptr_data = %p | ptr_next = %p\n", BWHITE, NC, (char *)push_test->data, push_test, push_test->next);
 	printf("%snew size = %d\n%s", BWHITE, ft_list_size(push_test), NC);
 	
-	free(list.data);
-	free(push_test->data);
-	free(push_test);
+	//free(list.data);
+	//free(push_test->data);
+	//free(push_test);
 	
 	push_test = NULL;
 
@@ -199,13 +154,13 @@ void	ft_check_list_push_front(void)
 	ft_list_push_front(&push_test, NULL);
 	printf("%sadded:%s `%s` | ptr_data = %p | ptr_next = %p\n", BWHITE, NC, (char *)push_test->data, push_test, push_test->next);
 	
-	free(push_test->next);
+	//free(push_test->next);
 	push_test->next = NULL;
 	
 	ft_list_push_front(&push_test, strdup("Guten tag"));
 	printf("%sadded:%s `%s` | ptr_data = %p | ptr_next = %p\n", BWHITE, NC, (char *)push_test->data, push_test, push_test->next);
 	
-	ft_lstclear(&push_test);
+
 	printf("\n%s===> Done!%s", BGREEN, NC);
 	return ;
 }
@@ -220,14 +175,14 @@ void	ft_check_list_remove_if(void)
 	t_list	*list;
 
 	list = NULL;
-	list_add_back(&list, list_new("hIOA"));
-	list_add_back(&list, list_new("anoczr"));
-	list_add_back(&list, list_new("whuaigf"));
-	list_add_back(&list, list_new("pczkz"));
-	list_add_back(&list, list_new("abiuceh"));
-	list_add_back(&list, list_new("zhduid"));
-	list_add_back(&list, list_new("uu"));
-	list_add_back(&list, list_new("ftegd"));
+	ft_list_push_front(&list, strdup("hIOA"));
+	ft_list_push_front(&list, strdup("anoczr"));
+	ft_list_push_front(&list, strdup("whuaigf"));
+	ft_list_push_front(&list, strdup("pczkz"));
+	ft_list_push_front(&list, strdup("abiuceh"));
+	ft_list_push_front(&list, strdup("zhduid"));
+	ft_list_push_front(&list, strdup("uu"));
+	ft_list_push_front(&list, strdup("ftegd"));
 	printf("%sbefore:%s\n", BWHITE, NC);
 	ft_print_list(list);
 	printf("\n");
@@ -239,18 +194,18 @@ void	ft_check_list_remove_if(void)
 	printf("\n");
 
 	list = NULL;
-	list_add_back(&list, list_new(strdup("5")));
-	list_add_back(&list, list_new(strdup("5")));
-	list_add_back(&list, list_new(strdup("5")));
-	list_add_back(&list, list_new(strdup("5")));
-	list_add_back(&list, list_new(strdup("5")));
-	list_add_back(&list, list_new(strdup("2")));
-	list_add_back(&list, list_new(strdup("5")));
-	list_add_back(&list, list_new(strdup("2")));
-	list_add_back(&list, list_new(strdup("8")));
-	list_add_back(&list, list_new(strdup("0")));
-	list_add_back(&list, list_new(strdup("0")));
-	list_add_back(&list, list_new(strdup("1")));
+	ft_list_push_front(&list, strdup("5"));
+	ft_list_push_front(&list, strdup("5"));
+	ft_list_push_front(&list, strdup("5"));
+	ft_list_push_front(&list, strdup("5"));
+	ft_list_push_front(&list, strdup("5"));
+	ft_list_push_front(&list, strdup("2"));
+	ft_list_push_front(&list, strdup("5"));
+	ft_list_push_front(&list, strdup("2"));
+	ft_list_push_front(&list, strdup("8"));
+	ft_list_push_front(&list, strdup("0"));
+	ft_list_push_front(&list, strdup("0"));
+	ft_list_push_front(&list, strdup("1"));
 	printf("%sbefore:%s\n", BWHITE, NC);
 	ft_print_list(list);
 	printf("\n");
@@ -326,10 +281,10 @@ void	ft_check_list_sort(void)
 
 int		main(void)
 {
-	ft_check_atoi_base();
-	ft_check_list_push_front();
-	ft_check_list_remove_if();
-	ft_check_list_size();
-	ft_check_list_sort();
+	//ft_check_atoi_base();
+	//ft_check_list_push_front();
+	//ft_check_list_remove_if();
+	//ft_check_list_size();
+	//ft_check_list_sort();
 	return (0);
 }

@@ -5,8 +5,6 @@ section	.text
 ;rax	ft_atoi_base(rdi, rsi)
 
 ft_atoi_base:
-		;PUSH	rbx							;save sign
-		;PUSH	r12							;save base length
 	XOR		rax, rax				; initialize rax(i.e. the return value) at 0
 	XOR		rbx, rbx				; initialize rbx(i.e. the sign) at 0
 	XOR		r12, r12				; initialize r12(i.e. the base length) at 0 (i = 0)
@@ -20,16 +18,16 @@ base_loop:
 	JZ		base_end				; if equal, jump to base_end label
 	MOV		r8, r12					; else r8 receives the value of r12 (j = i)
 
-base_check_dup_inc:
+check_incr:
 	INC		r8						; increment r8 (j++)
 
-base_check_dup_loop:
+check_loop:
 	CMP		BYTE [rsi + r8], 0		; chek if base[r8] == '\0'
 	JZ		base_check				; if equal, jump to the base_check label
 	MOV		r9b, [rsi + r8]
 	CMP		BYTE [rsi + r12], r9b	; base[base_length] == base[j]
 	JE		set_rax					; if equal, jump to the set_rax label
-	JMP		base_check_dup_inc		; else, jump to the base_check_dup_inc label
+	JMP		check_incr				; else, jump to the check_incr label
 
 base_check:
 	CMP		BYTE [rsi + r12], 32	; chek if base[base_length] == ' '
@@ -118,6 +116,4 @@ set_rax:
 	NEG		rax						; else ret = -ret
 
 return:
-		;POP		r12						; restore r12
-		;POP		rbx						; restore rbx
 	RET

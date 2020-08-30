@@ -9,25 +9,20 @@ section	.text
 
 ft_list_remove_if:
 first:
-	MOV		r10, [rdi]	; r10 = *begin_list
-	CMP		r10, 0		; check if *begin_list == NULL
-	JE		stop		; if so, jump to the return label
-	PUSH	rdi			; save rdi
-	PUSH	rsi			; save rsi
-	PUSH	rdx			; save rdx
-
-	MOV		rdi, [r10]	; first = lst->data
-
-
+	MOV		r10, [rdi]		; r10 = *begin_list
+	CMP		r10, 0			; check if *begin_list == NULL
+	JE		stop			; if so, jump to the return label
+	PUSH	rdi				; save rdi
+	PUSH	rsi				; save rsi
+	PUSH	rdx				; save rdx
+	MOV		rdi, [r10]		; first = lst->data
 	CALL	rdx				; call the comparison function
 	POP		rdx				; restore rdx
 	POP		rsi				; restore rsi
 	POP		rdi				; restore rdi
 	CMP		rax, 0			; check if ret == 0 (the return of the function previously calleds)
 	JNE		stop			; if not jump to the stop label
-
-	MOV		r10, [rdi]		; stock *begin_list (r10 = *begin_list)
-
+	MOV		r10, [rdi]		; r10 = *begin_list (in order to stock it)
 	MOV		r11, [r10+8]	; r11 = *begin_list->next
 	MOV		[rdi], r11		; *begin_list = (*begin_list)->next
 	PUSH	rdi

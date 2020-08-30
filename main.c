@@ -177,22 +177,30 @@ void	ft_check_strdup(void)
 {
 	printf("%s*********************** FT_STRDUP ***********************\n\n%s", UBLUE, NC);
 	char str0[500] = "";
+	char *str1 = strdup(str0);
+	char *str2 = ft_strdup(str0);
 	printf("s: ");
 	printf("%s\"%s\"\n\n%s", BWHITE, str0, NC);
 
 	printf("the strdup: ");
-	printf("%s%s\n%s", BGREEN, strdup(str0), NC);
+	printf("%s%s\n%s", BGREEN, str1, NC);
 	printf("my ft_strdup: ");
-	printf("%s%s\n\n%s", BGREEN, ft_strdup(str0), NC);
+	printf("%s%s\n\n%s", BGREEN, str2, NC);
+	free(str1);
+	free(str2);
 
-	char str1[500] = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.";
+	char str3[500] = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.";
+	char *str4 = strdup(str3);
+	char *str5 = ft_strdup(str3);
 	printf("s: ");
-	printf("%s\"%s\"\n\n%s", BWHITE, str1, NC);
+	printf("%s\"%s\"\n\n%s", BWHITE, str3, NC);
 
 	printf("the strdup: ");
-	printf("%s%s\n%s", BGREEN, strdup(str1), NC);
+	printf("%s%s\n%s", BGREEN, str4, NC);
 	printf("my ft_strdup: ");
-	printf("%s%s\n\n%s", BGREEN, ft_strdup(str1), NC);
+	printf("%s%s\n\n%s", BGREEN, str5, NC);
+	free(str4);
+	free(str5);
 
 	printf("\n%s===> Done!%s\n\n", BGREEN, NC);
 	return ;
