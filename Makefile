@@ -12,8 +12,6 @@
 
 NAME = libasm.a
 
-NAME_BO = libasm_bonus.a
-
 ##################################### PATH #####################################
 
 NATIV = libasm_sources/native/
@@ -24,7 +22,9 @@ BONUS = libasm_sources/bonus/
 SRCS +=	$(NATIV)ft_strlen.s		$(NATIV)ft_strcpy.s		$(NATIV)ft_strcmp.s \
 		$(NATIV)ft_strdup.s		$(NATIV)ft_read.s		$(NATIV)ft_write.s 
 
-SRCSBO += 	$(BONUS)ft_list_push_front_bonus.s 			$(BONUS)ft_list_size_bonus.s
+SRCSBO += 	$(BONUS)ft_list_push_front_bonus.s 			$(BONUS)ft_list_size_bonus.s \
+			$(BONUS)ft_list_remove_if_bonus.s 			$(BONUS)ft_atoi_base_bonus.s \
+			$(BONUS)ft_list_sort_bonus.s
 
 ##################################### BASIC ####################################
 
@@ -49,19 +49,19 @@ EXEBO = exebo
 all : $(NAME)
 
 .s.o:
-	nasm -f macho64 $^
+	nasm -f elf64 $^
 
 $(NAME) : $(OBJS) 
 	ar rcs $(NAME) $(OBJS)
 
 run : $(NAME)
-	$(CC) $(CFLAGS) main.c -L ./ -lasm -o $(EXE)
+	$(CC) -no-pie $(CFLAGS) main.c -L ./ -lasm -o $(EXE)
 	./exe
 
-$(NAME_BO) : $(OBJS) $(OBJSBO) 
-	ar rcs $(NAME_BO) $(OBJS) $(OBJSBO)
+bonus : $(OBJS) $(OBJSBO) 
+	ar rcs $(NAME) $(OBJS) $(OBJSBO)
 
-runbo : $(NAME_BO)
+run_bonus : $(NAME_BO)
 	$(CC) -no-pie $(CFLAGS) main_bonus.c -L ./ -lasm -o $(EXEBO)
 	./exebo
 

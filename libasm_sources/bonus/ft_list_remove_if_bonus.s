@@ -1,90 +1,81 @@
-section	.text
-	global	ft_list_remove_if
-	extern	free
-
-;void	ft_list_remove_if(t_list **begin_list, void *data_ref, int (*cmp)(), void (*free_fct)(void *));
-;int	(*cmp)(list_ptr->data, data_ref);
-;void	(*free_fct)(list_ptr->data);
-;rax	ft_list_remove_if(rdi, rsi, rdx, rcx);
+section .text
+	extern free
+	global ft_list_remove_if
 
 ft_list_remove_if:
-	PUSH	rbp					;save rbp (tmp)
-	PUSH	rbx					;save rbx (previous)
-	PUSH	r12					;save r12 (first)
-	MOV		r12, [rdi]			;r12 receives the adress of rdi (first = *begin)
-	XOR		rbx, rbx			;initialize rbx at 0 (previous = NULL)
-	CMP		rdi, 0				;check if begin == NULL
-	JZ		return				;if equal, jump to the return label
-	CMP		rdx, 0				;check if cmp == NULL
-	JZ		return				;if equal, jump to the return label
-	CMP		rcx, 0				;check if free_fct == NULL
-	JZ		return				;if equal, jump to the return label
-	JMP		comp_start			;jump to the compare_start
+first:
+	mov		r10, [rdi]	; r10 = *begin_list
+	cmp		r10, 0		; if *begin_list == NULL
+	je		stop		; then return
+	push	rdi			;
+	push	rsi			;
+	push	rdx			;
+	mov		rdi, [r10]	; 1st = lst->data
+	call	rdx			; *cmp((*being_list)->data, data_ref)
+	pop		rdx			;
+	pop		rsi			;
+	pop		rdi			;
+	cmp		rax, 0		; if ret != 0
+	jne		stop		; then break
+	mov		r10, [rdi]	; stock *begin_list
+	mov		r11, [r10+8]; r12 = *begin_list->next
+	mov		[rdi], r11	; *begin_list = (*begin_list)->next
+	push	rdi			;
+	push	rsi			;
+	push	rdx			;
+	push	r10			;
+	push	r11			;
+	mov		rdi, r10	; 1st = *begin_list
+	call	free		; free(*begin_list)
+	pop		r11			;
+	pop		r10			;
+	pop		rdx			;
+	pop		rsi			;
+	pop		rdi			;
+	jmp		first		; loop
 
-free_elt:
-	MOV		r8, [rdi]
-	MOV		rbp, [r8 + 8]		;tmp = (*begin)->next
-	PUSH	rsi
-	PUSH	rdx
-	PUSH	rcx
-	PUSH	rdi
-	MOV		rdx, [rdi]
-	MOV		rdi, [rdx]
-	CALL	rcx					;(*free_fct)((*begin)->data)
-	POP		rdi
-	PUSH	rdi
-	MOV		rdx, [rdi]
-	MOV		rdi, rdx
-	CALL	_free				;free(*begin)
-	POP		rdi
-	POP		rcx
-	POP		rdx
-	POP		rsi
-	MOV		[rdi], rbp			;*begin = tmp
-	CMP		rbx, 0				;previous == NULL
-	JNZ		set_prev_next
-	MOV		r12, rbp			;first == tmp
-	JMP		compare_start
+stop:
+	mov		r10, [rdi]	; r10 = *begin_list
 
-set_prev_next:
-	MOV		[rbx + 8], rbp		;previous.next = tmp
-	JMP		compare_start
+second:
+	mov		r11, [r10+8]; r11 = r10->next
+	cmp		r10, 0		; if r10 == NULL
+	je		end			; then end
+	cmp		r11, 0		; if next == NULL
+	je		end			; then end
+	push	rdi			;
+	push	rsi			;
+	push	rdx			;
+	push	r10			;
+	push	r11			;
+	mov		rdi, [r11]	; 1st = next->data
+	call	rdx			; *cmp((*being_list)->data, data_ref)
+	pop		r11			;
+	pop		r10			;
+	pop		rdx			;
+	pop		rsi			;
+	pop		rdi			;
+	cmp		rax, 0		; if ret != 0
+	jne		pass		; then break
+	push	rdi			;
+	push	rsi			;
+	push	rdx			;
+	push	r10			;
+	push	r11			;
+	mov		rdi, r11	; 1st = next
+	mov		r11, [r11+8]; r11 = next->next
+	mov		[r10+8], r11; r10->next = next->next
+	call	free		; free(next)
+	pop		r11			;
+	pop		r10			;
+	pop		rdx			;
+	pop		rsi			;
+	pop		rdi			;
+	jmp		second		; loop
 
-comp_null:
-	XOR		rdi, rsi			;///////////////////////////////////////////////////////
-	MOV		rax, rdi
-	JMP		comp_end
+pass:
+	mov		r10, r11	; *r10 = next
+	jmp		second		; loop
 
-move_next:
-	MOV		rbx, [rdi]
-	MOV		r8,	[rbx + 8]		;tmp = (*begin)->next
-	MOV		[rdi], r8			;*begin = tmp
-
-comp_start:
-	CMP		QWORD [rdi], 0		;check if *begin == NULL
-	JZ		return				;if equal, jump to the return label
-	PUSH	rdi
-	PUSH	rsi					;data_ref already in rsi
-	PUSH	rdx
-	PUSH	rcx
-	MOV		r8, [rdi]
-	MOV		rdi, [r8]			;(*begin)->data in rdi
-	CMP		rdi, 0				;(*begin)->data == NULL
-	JZ		comp_null
-	CALL	rdx					;(*cmp)((*begin)->data, data_ref)
-
-comp_end:
-	POP		rcx
-	POP		rdx
-	POP		rsi
-	POP		rdi
-	CMP		rax, 0				;(*cmp) == 0
-	JZ		free_elt			;(*free_fct)
-	JMP		move_next
-
-return:
-	MOV		[rdi], r12			; *begin = first
-	POP		r12					; restore rbx
-	POP		rbx					; restore rbx
-	POP		rbp
-	RET
+end:
+	ret

@@ -34,6 +34,8 @@ void	ft_check_strlen(void)
 	printf("%s%ld\n%s", BGREEN, strlen(str1), NC);
 	printf("my ft_strlen: ");
 	printf("%s%ld\n\n%s", BGREEN, ft_strlen(str1), NC);
+
+	printf("\n%s===> Done!%s\n\n", BGREEN, NC);
 	return ;
 }
 
@@ -91,6 +93,8 @@ void	ft_check_strcpy(void)
 	printf("%s%s\n%s", BGREEN, strcpy(str6, str7), NC);
 	printf("my ft_strcpy: ");
 	printf("%s%s\n\n%s", BGREEN, ft_strcpy(str6, str7), NC);
+
+	printf("\n%s===> Done!%s\n\n", BGREEN, NC);
 	return ;
 }
 
@@ -160,6 +164,8 @@ void	ft_check_strcmp(void)
 	printf("%s%d\n%s", BGREEN, strcmp(str8, str9), NC);
 	printf("my ft_strcmp: ");
 	printf("%s%d\n\n%s", BGREEN, ft_strcmp(str8, str9), NC);
+
+	printf("\n%s===> Done!%s\n\n", BGREEN, NC);
 	return ;
 }
 
@@ -187,6 +193,8 @@ void	ft_check_strdup(void)
 	printf("%s%s\n%s", BGREEN, strdup(str1), NC);
 	printf("my ft_strdup: ");
 	printf("%s%s\n\n%s", BGREEN, ft_strdup(str1), NC);
+
+	printf("\n%s===> Done!%s\n\n", BGREEN, NC);
 	return ;
 }
 
@@ -227,6 +235,8 @@ void	ft_check_write(void)
 	printf("my ft_write:\n");
 	ret1 = ft_write(fd, str0, ft_strlen(str0));
 	printf("%s%d - %s\n\n%s", BGREEN, ret1, strerror(errno), NC);
+
+	printf("\n%s===> Done!%s\n\n", BGREEN, NC);
 	return ;
 }
 
@@ -281,7 +291,7 @@ void	ft_check_read(void)
 	printf("buf:\n%s\n\n", str2);
 
 	free(str2);
-	
+	printf("\n%s===> Done!%s\n\n", BGREEN, NC);
 	return ;
 }
 

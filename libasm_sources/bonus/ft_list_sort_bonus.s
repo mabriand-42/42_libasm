@@ -13,7 +13,7 @@ ft_list_sort:
 	MOV		r12, [rdi]			;else r12 receives the adress of rdi (first = *begin)
 	CMP		rsi, 0				;check if rsi == NULL
 	JZ		return				;if equal, jump to the return label
-	JMP		compare_main		;else jump to the comp_main label
+	JMP		comp_main		;else jump to the comp_main label
 
 incr_main:
 	MOV		rcx, [rdi]
