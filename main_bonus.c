@@ -32,6 +32,20 @@ void	ft_print_list(t_list *list)
 	}
 }
 
+void	ft_list_clear(t_list **list)
+{
+	t_list	*tmp;
+
+	while (*list)
+	{
+		tmp = (*list)->next;
+		if ((*list)->data)
+			free((*list)->data);
+		free(*list);
+		*list = tmp;
+	}
+}
+
 /*
 ** ft_atoi_base
 */
@@ -244,7 +258,7 @@ void	ft_check_list_sort(void)
 	t_list	list_next;
 	t_list	list_last;
 	t_list	*push_test1;
-	t_list	*push_test2;
+	//t_list	*push_test2;
 
 	list.data = strdup("Hfiozet");
 	list.next = &list_next;
@@ -254,16 +268,10 @@ void	ft_check_list_sort(void)
 	list_last.next = NULL;
 	push_test1 = &list;
 	
-	ft_list_push_front(&push_test1, strdup("Zaoifu"));
-	ft_list_push_front(&push_test1, strdup("mdjiozef"));
-	ft_list_push_front(&push_test1, strdup("0123456"));
-	ft_list_push_front(&push_test1, strdup("ajiuo"));
-	ft_list_push_front(&push_test1, strdup("Roooooom"));
-	ft_list_push_front(&push_test1, strdup("vsyiqUU"));
+	ft_list_push_front(&push_test1, strdup("ZAOIFUfu"));
+	ft_list_push_front(&push_test1, strdup("01728"));
+	ft_list_push_front(&push_test1, strdup("aji"));
 	ft_list_push_front(&push_test1, strdup("POifa2"));
-	ft_list_push_front(&push_test1, strdup("ZUIHDJQQS"));
-	ft_list_push_front(&push_test1, strdup("798456"));
-	ft_list_push_front(&push_test1, strdup("0"));
 	ft_list_push_front(&push_test1, strdup("zzzzzzzzzzzz"));
 	printf("%sbefore:%s\n", BWHITE, NC);
 	ft_print_list(push_test1);
@@ -271,7 +279,15 @@ void	ft_check_list_sort(void)
 	printf("\n%safter:%s\n", BWHITE, NC);
 	ft_print_list(push_test1);
 	
-	push_test2 = &list;
+	while (push_test1)
+	{
+		free(push_test1->data);
+		push_test1 = push_test1->next;
+	}
+	
+
+	//ft_list_clear(&push_test1);
+	/*push_test2 = &list;
 	printf("\n%ssort with begin_list = NULL:%s\n", BWHITE, NC);
 
 	printf("%sbefore:%s\n", BWHITE, NC);
@@ -286,7 +302,7 @@ void	ft_check_list_sort(void)
 	ft_print_list(push_test2);
 	ft_list_sort(&push_test2, &strcmp);
 	printf("\n%safter:%s\n", BWHITE, NC);
-	ft_print_list(push_test2);
+	ft_print_list(push_test2);*/
 
 	printf("\n%s===> Done!%s\n\n", BGREEN, NC);
 	return ;
@@ -295,9 +311,9 @@ void	ft_check_list_sort(void)
 int		main(void)
 {
 	//ft_check_atoi_base();
-	ft_check_list_push_front();
+	//ft_check_list_push_front();
 	//ft_check_list_remove_if();
 	//ft_check_list_size();
-	//ft_check_list_sort();
+	ft_check_list_sort();
 	return (0);
 }
