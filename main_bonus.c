@@ -108,9 +108,9 @@ void	ft_check_list_size(void)
 	
 	printf("\n%s===> Done!%s", BGREEN, NC);
 
-	//free(list.data);
-	//free(list_next.data);
-	//free(list_last.data);
+	free(list.data);
+	free(list_next.data);
+	free(list_last.data);
 	return ;
 }
 
@@ -138,27 +138,40 @@ void	ft_check_list_push_front(void)
 	printf("%slist content:\n\n%s", BWHITE, NC);
 	ft_print_list(&list);
 
-	ft_list_push_front(&push_test, strdup("Coucou"));
+	char 	*str1;
+	str1 = strdup("Coucou");
+	ft_list_push_front(&push_test, str1);
 
 	printf("\n%sadded:%s `%s` | ptr_data = %p | ptr_next = %p\n", BWHITE, NC, (char *)push_test->data, push_test, push_test->next);
 	printf("%snew size = %d\n%s", BWHITE, ft_list_size(push_test), NC);
 	
-	//free(list.data);
-	//free(push_test->data);
-	//free(push_test);
-	
-	push_test = NULL;
+	free(list.data);
+	free(list_next.data);
+	free(list_last.data);
+	free(str1);
+	free(push_test);
 
-	ft_list_push_front(&push_test, strdup("Good morning"));
+	push_test = NULL;
+	char 	*str2;
+	str2 = strdup("Good morning");
+
+	ft_list_push_front(&push_test, str2);
 	printf("\n%sadded:%s `%s` | ptr_data = %p | ptr_next = %p\n", BWHITE, NC, (char *)push_test->data, push_test, push_test->next);
 	ft_list_push_front(&push_test, NULL);
 	printf("%sadded:%s `%s` | ptr_data = %p | ptr_next = %p\n", BWHITE, NC, (char *)push_test->data, push_test, push_test->next);
 	
-	//free(push_test->next);
+	free(str2);
+	free(push_test->next);
+
 	push_test->next = NULL;
-	
-	ft_list_push_front(&push_test, strdup("Guten tag"));
+	char 	*str3;
+	str3 = strdup("Guten tag");
+	ft_list_push_front(&push_test, str3);
 	printf("%sadded:%s `%s` | ptr_data = %p | ptr_next = %p\n", BWHITE, NC, (char *)push_test->data, push_test, push_test->next);
+	
+	free(str3);
+	free(push_test);
+	free(push_test->next);
 	
 
 	printf("\n%s===> Done!%s", BGREEN, NC);
@@ -282,7 +295,7 @@ void	ft_check_list_sort(void)
 int		main(void)
 {
 	//ft_check_atoi_base();
-	//ft_check_list_push_front();
+	ft_check_list_push_front();
 	//ft_check_list_remove_if();
 	//ft_check_list_size();
 	//ft_check_list_sort();
