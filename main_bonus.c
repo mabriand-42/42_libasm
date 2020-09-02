@@ -213,13 +213,13 @@ void	ft_check_list_remove_if(void)
 	ft_print_list(list);
 	printf("\n");
 
-	//ft_list_remove_if(&list, "5", strcmp, free);
+	ft_list_remove_if(&list, "5", strcmp, free);
 
 	printf("%safter:%s\n", BWHITE, NC);
 	ft_print_list(list);
 	ft_list_clear(list);
 
-	printf("\n%s===> Done!%s\n\n", BGREEN, NC);
+	printf("\n%s===> Done!%s", BGREEN, NC);
 	return ;
 }
 
@@ -281,9 +281,9 @@ void	ft_check_list_sort(void)
 int		main(void)
 {
 	ft_check_atoi_base();
+	ft_check_list_size();
 	ft_check_list_push_front();
 	ft_check_list_remove_if();
-	ft_check_list_size();
 	ft_check_list_sort();
 	return (0);
 }
