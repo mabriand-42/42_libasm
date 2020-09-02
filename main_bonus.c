@@ -25,6 +25,8 @@
 
 void	ft_print_list(t_list *list)
 {
+	if (list == NULL)
+			printf("(null)\n");
 	while (list)
 	{
 		printf("; '%s' | ptr_data = %p | ptr_next = %p\n", (char *)list->data, list, list->next);
@@ -32,20 +34,19 @@ void	ft_print_list(t_list *list)
 	}
 }
 
-void	ft_list_clear(t_list **list)
+void	ft_list_clear(t_list *list)
 {
-	t_list	*tmp;
+	t_list *tmp;
 
-	while (*list)
+	tmp = NULL;
+	while (list)
 	{
-		tmp = (*list)->next;
-		if ((*list)->data)
-			free((*list)->data);
-		free(*list);
-		*list = tmp;
+		tmp = list->next;
+		free(list->data);
+		free(list);
+		list = tmp;
 	}
 }
-
 /*
 ** ft_atoi_base
 */
@@ -136,57 +137,31 @@ void	ft_check_list_push_front(void)
 {
 	printf("\n\n%s*********************** FT_LIST_PUSH_FRONT **************\n\n%s", UCYAN, NC);
 
-	t_list	list;
-	t_list	list_next;
-	t_list	list_last;
-	t_list	*push_test;
+	t_list	*list;
 
-	list.data = strdup("Hello");
-	list.next = &list_next;
-	list_next.data = strdup("Salut");
-	list_next.next = &list_last;
-	list_last.data = strdup("Bonjour");
-	list_last.next = NULL;
-	push_test = &list;
+	list = NULL;
+	printf("%sbefore:%s\n", BWHITE, NC);
+	ft_print_list(list);
+	printf("%ssize = %d\n\n%s", BWHITE, ft_list_size(list), NC);
 
-	printf("%slist content:\n\n%s", BWHITE, NC);
-	ft_print_list(&list);
-
-	char 	*str1;
-	str1 = strdup("Coucou");
-	ft_list_push_front(&push_test, str1);
-
-	printf("\n%sadded:%s `%s` | ptr_data = %p | ptr_next = %p\n", BWHITE, NC, (char *)push_test->data, push_test, push_test->next);
-	printf("%snew size = %d\n%s", BWHITE, ft_list_size(push_test), NC);
+	printf("%safter:%s\n", BWHITE, NC);
+	ft_list_push_front(&list, strdup("Huafaef"));
+	ft_list_push_front(&list, strdup("fzgrhh"));
+	ft_list_push_front(&list, strdup("gre0vre84"));
+	ft_list_push_front(&list, strdup("pofeiajfK"));
+	ft_print_list(list);
+	printf("%ssize = %d\n%s", BWHITE, ft_list_size(list), NC);
 	
-	free(list.data);
-	free(list_next.data);
-	free(list_last.data);
-	free(str1);
-	free(push_test);
+	ft_list_push_front(&list, strdup("kzoidhz"));
+	printf("\n%sadded:%s `%s` | ptr_data = %p | ptr_next = %p\n", BWHITE, NC, (char *)list->data, list, list->next);
+	ft_list_push_front(&list, NULL);
+	printf("%sadded:%s `%s` | ptr_data = %p | ptr_next = %p\n", BWHITE, NC, (char *)list->data, list, list->next);
+	ft_list_push_front(&list, strdup("XZAmlkdk"));
+	printf("%sadded:%s `%s` | ptr_data = %p | ptr_next = %p\n", BWHITE, NC, (char *)list->data, list, list->next);
+	ft_print_list(list);
+	printf("%ssize = %d\n%s", BWHITE, ft_list_size(list), NC);
 
-	push_test = NULL;
-	char 	*str2;
-	str2 = strdup("Good morning");
-
-	ft_list_push_front(&push_test, str2);
-	printf("\n%sadded:%s `%s` | ptr_data = %p | ptr_next = %p\n", BWHITE, NC, (char *)push_test->data, push_test, push_test->next);
-	ft_list_push_front(&push_test, NULL);
-	printf("%sadded:%s `%s` | ptr_data = %p | ptr_next = %p\n", BWHITE, NC, (char *)push_test->data, push_test, push_test->next);
-	
-	free(str2);
-	free(push_test->next);
-
-	push_test->next = NULL;
-	char 	*str3;
-	str3 = strdup("Guten tag");
-	ft_list_push_front(&push_test, str3);
-	printf("%sadded:%s `%s` | ptr_data = %p | ptr_next = %p\n", BWHITE, NC, (char *)push_test->data, push_test, push_test->next);
-	
-	free(str3);
-	free(push_test);
-	free(push_test->next);
-	
+	ft_list_clear(list);
 
 	printf("\n%s===> Done!%s", BGREEN, NC);
 	return ;
@@ -218,6 +193,7 @@ void	ft_check_list_remove_if(void)
 
 	printf("%safter:%s\n", BWHITE, NC);
 	ft_print_list(list);
+	ft_list_clear(list);
 	printf("\n");
 
 	list = NULL;
@@ -237,10 +213,11 @@ void	ft_check_list_remove_if(void)
 	ft_print_list(list);
 	printf("\n");
 
-	ft_list_remove_if(&list, "5", strcmp, free);
+	//ft_list_remove_if(&list, "5", strcmp, free);
 
 	printf("%safter:%s\n", BWHITE, NC);
 	ft_print_list(list);
+	ft_list_clear(list);
 
 	printf("\n%s===> Done!%s\n\n", BGREEN, NC);
 	return ;
@@ -254,55 +231,48 @@ void	ft_check_list_sort(void)
 {
 	printf("\n\n%s*********************** FT_LIST_SORT ***************\n\n%s", UCYAN, NC);
 
-	t_list	list;
-	t_list	list_next;
-	t_list	list_last;
-	t_list	*push_test1;
-	//t_list	*push_test2;
+	t_list	*list;
 
-	list.data = strdup("Hfiozet");
-	list.next = &list_next;
-	list_next.data = strdup("Lfiaj");
-	list_next.next = &list_last;
-	list_last.data = strdup("Rkjfn");
-	list_last.next = NULL;
-	push_test1 = &list;
-	
-	ft_list_push_front(&push_test1, strdup("ZAOIFUfu"));
-	ft_list_push_front(&push_test1, strdup("01728"));
-	ft_list_push_front(&push_test1, strdup("aji"));
-	ft_list_push_front(&push_test1, strdup("POifa2"));
-	ft_list_push_front(&push_test1, strdup("zzzzzzzzzzzz"));
+	list = NULL;
+	ft_list_push_front(&list, strdup("Hfiozet"));
+	ft_list_push_front(&list, strdup("Lfiaj"));
+	ft_list_push_front(&list, strdup("Rkjfn"));
+	ft_list_push_front(&list, strdup("ZAOIFUfu"));
+	ft_list_push_front(&list, strdup("01728"));
+	ft_list_push_front(&list, strdup("aji"));
+	ft_list_push_front(&list, strdup("POifa2"));
+	ft_list_push_front(&list, strdup("zzzzzzzzzzzz"));
 	printf("%sbefore:%s\n", BWHITE, NC);
-	ft_print_list(push_test1);
-	ft_list_sort(&push_test1, &strcmp);
+	ft_print_list(list);
+
 	printf("\n%safter:%s\n", BWHITE, NC);
-	ft_print_list(push_test1);
+	ft_list_sort(&list, &strcmp);
+	ft_print_list(list);
 	
-	while (push_test1)
-	{
-		free(push_test1->data);
-		push_test1 = push_test1->next;
-	}
-	
+	ft_list_clear(list);
 
-	//ft_list_clear(&push_test1);
-	/*push_test2 = &list;
-	printf("\n%ssort with begin_list = NULL:%s\n", BWHITE, NC);
+	printf("\n\n%ssort with begin_list = NULL:%s\n", BCYAN, NC);
+
+	list = NULL;
+	ft_list_push_front(&list, strdup("HAdud"));
+	ft_list_push_front(&list, strdup("0fzpjv47"));
+	ft_list_push_front(&list, strdup("cnoiufe"));
 
 	printf("%sbefore:%s\n", BWHITE, NC);
-	ft_print_list(push_test2);
+	ft_print_list(list);
 	ft_list_sort(NULL, &strcmp);
 	printf("\n%safter:%s\n", BWHITE, NC);
-	ft_print_list(push_test2);
+	ft_print_list(list);
 
-	printf("\n%ssort with begin_list = &list:%s\n", BWHITE, NC);
+	printf("\n%ssort with begin_list = &list:%s\n", BCYAN, NC);
 
 	printf("%sbefore:%s\n", BWHITE, NC);
-	ft_print_list(push_test2);
-	ft_list_sort(&push_test2, &strcmp);
+	ft_print_list(list);
+	ft_list_sort(&list, &strcmp);
 	printf("\n%safter:%s\n", BWHITE, NC);
-	ft_print_list(push_test2);*/
+	ft_print_list(list);
+
+	ft_list_clear(list);
 
 	printf("\n%s===> Done!%s\n\n", BGREEN, NC);
 	return ;
@@ -310,10 +280,10 @@ void	ft_check_list_sort(void)
 
 int		main(void)
 {
-	//ft_check_atoi_base();
-	//ft_check_list_push_front();
-	//ft_check_list_remove_if();
-	//ft_check_list_size();
+	ft_check_atoi_base();
+	ft_check_list_push_front();
+	ft_check_list_remove_if();
+	ft_check_list_size();
 	ft_check_list_sort();
 	return (0);
 }
