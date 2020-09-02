@@ -6,17 +6,17 @@ section	.text
 ;rax		ft_write(rdi, rsi, rdx);
 
 ft_write:
-	XOR		rax, rax
-	MOV		rax, 1
-	SYSCALL
-	CMP		rax, 0
-	JL		error
+	XOR		rax, rax			; initialize rax (i.e. the return value) at 0
+	MOV		rax, 1				; rax receives the value 1
+	SYSCALL						; make a system call on 1 (=write)
+	CMP		rax, 0				; chek if the system call succeeded
+	JL		error				; if not, jump to the error label
 	RET
 
 error:
 	NEG		rax
 	MOV		rdi, rax
-	CALL	__errno_location
+	CALL	__errno_location	; call the errno function
 	MOV		[rax], rdi
 	MOV		rax, -1
 	RET
