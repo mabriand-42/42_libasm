@@ -12,7 +12,6 @@
 
 #include "libasm_header/libasm_bonus.h"
 
-
 /*
 ** Useful macro
 */
@@ -47,6 +46,7 @@ void	ft_list_clear(t_list *list)
 		list = tmp;
 	}
 }
+
 /*
 ** ft_atoi_base
 */
@@ -54,7 +54,9 @@ void	ft_list_clear(t_list *list)
 void	ft_check_atoi_base(void)
 {
 	printf("%s\n\n*********************** FT_ATOI_BASE ********************\n\n%s", UCYAN, NC);
-	int	i = 0;
+
+	int	i;
+	i = 0;
 
 	ATOI_BASE("42", "0123456789")
 	ATOI_BASE("0", "0123456789")
@@ -115,17 +117,16 @@ void	ft_check_list_size(void)
 	printf("%slist content:\n\n%s", BWHITE, NC);
 	ft_print_list(&list);
 
-	printf("\n");
-	printf("from %sfirst%s, size = %s%d%s\n", BWHITE, NC, BGREEN, ft_list_size(&list), NC);
+	printf("\nfrom %sfirst%s, size = %s%d%s\n", BWHITE, NC, BGREEN, ft_list_size(&list), NC);
 	printf("from %ssecond%s, size = %s%d%s\n", BWHITE, NC, BGREEN, ft_list_size(&list_next), NC);
 	printf("from %slast%s, size = %s%d%s\n", BWHITE, NC, BGREEN, ft_list_size(&list_last), NC);
 	printf("from %s(null)%s, size = %s%d%s\n", BWHITE, NC, BGREEN, ft_list_size(NULL), NC);
 	
-	printf("\n%s===> Done!%s", BGREEN, NC);
-
 	free(list.data);
 	free(list_next.data);
 	free(list_last.data);
+
+	printf("\n%s===> Done!%s", BGREEN, NC);
 	return ;
 }
 
@@ -174,6 +175,7 @@ void	ft_check_list_push_front(void)
 void	ft_check_list_remove_if(void)
 {
 	printf("\n\n%s*********************** FT_LIST_REMOVE_IF ***************\n\n%s", UCYAN, NC);
+
 	t_list	*list;
 
 	list = NULL;

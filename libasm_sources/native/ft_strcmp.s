@@ -2,8 +2,8 @@ section .text
 	global	ft_strcmp
 	extern	ft_strlen
 
-;int	ft_strcmp(const char *s1, const char *s2);
-;rax	ft_strcmp(rdi, rsi);
+; int	ft_strcmp(const char *s1, const char *s2);
+; rax	ft_strcmp(rdi, rsi);
 
 ft_strcmp:
 	XOR		rcx, rcx			; initialize rcx (i.e. the cursor) at 0 (because bytes are =)

@@ -1,8 +1,8 @@
 section	.text
 	global	ft_atoi_base
 
-;int	ft_atoi_base(const char *str,const char *base)
-;rax	ft_atoi_base(rdi, rsi)
+; int	ft_atoi_base(const char *str,const char *base);
+; rax	ft_atoi_base(rdi, rsi);
 
 ft_atoi_base:
 	XOR		rax, rax				; initialize rax(i.e. the return value) at 0

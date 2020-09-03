@@ -2,8 +2,8 @@ section	.text
 	global	ft_list_push_front		;import malloc() uncontionally (rax malloc(rdi))
 	extern	malloc
 
-;void	ft_list_push_front(t_list **begin_list, void *data)
-;rax	ft_list_push_front(rdi, rsi)
+; void	ft_list_push_front(t_list **begin_list, void *data);
+; rax	ft_list_push_front(rdi, rsi);
 
 ft_list_push_front:
 	PUSH	rsp				; save the content of rsp (i.e. a general register = stack pointer) by putting it in the pile

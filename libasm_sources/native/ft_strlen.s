@@ -1,8 +1,8 @@
 section	.text
 	global	ft_strlen
 
-;size_t	ft_strlen(const char *str);
-;rax	ft_strlen(rdi);
+; size_t	ft_strlen(const char *str);
+; rax	ft_strlen(rdi);
 
 ft_strlen:
 	MOV		rcx, 0				; initialize rcx (i.e. the cursor) at 0

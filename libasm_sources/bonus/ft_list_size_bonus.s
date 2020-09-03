@@ -1,8 +1,8 @@
 section	.text
 	global	ft_list_size
 
-;int	ft_list_size(t_list *begin_list);
-;rax	ft_list_size(rdi);
+; int	ft_list_size(t_list *begin_list);
+; rax	ft_list_size(rdi);
 
 ft_list_size:
 	MOV		rsi, rdi		; rsi receives the value of rdi

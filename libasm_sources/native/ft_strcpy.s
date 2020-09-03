@@ -1,8 +1,8 @@
 section	.text
 	global	ft_strcpy
 
-;char	*ft_strcpy(char *dest, const char *src);
-;rax	ft_strcpy(rdi, rsi);
+; char	*ft_strcpy(char *dest, const char *src);
+; rax	ft_strcpy(rdi, rsi);
 
 ft_strcpy:
 	XOR		rcx, rcx			; initialize rcx (i.e. the cursor) at 0 (because bytes are equal)

@@ -1,9 +1,9 @@
 section	.text
 	global	ft_list_sort
 
-;void	ft_list_sort(t_list **begin_list, int (*cmp)());
-;int	(*cmp)(list_ptr->data, other_list_ptr->data);
-;rax	ft_list_sort(rdi, rsi);
+; void	ft_list_sort(t_list **begin_list, int (*cmp)());
+; int	(*cmp)(list_ptr->data, other_list_ptr->data);
+; rax	ft_list_sort(rdi, rsi);
 
 ft_list_sort:
 	PUSH	rbx					; save rbx (next)
