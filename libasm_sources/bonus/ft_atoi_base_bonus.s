@@ -5,6 +5,8 @@ section	.text
 ; rax	ft_atoi_base(rdi, rsi);
 
 ft_atoi_base:
+	;PUSH	rbx;
+	;PUSH	r12;
 	XOR		rax, rax				; initialize rax(i.e. the return value) at 0
 	XOR		rbx, rbx				; initialize rbx(i.e. the sign) at 0
 	XOR		r12, r12				; initialize r12(i.e. the base length) at 0 (i = 0)
@@ -92,7 +94,7 @@ atoi_loop:
 	CMP		BYTE [rdi + r8], 0		; str[i] == '\0'
 	JE		set_rax					; if equal jump to the set_rax label
 	XOR		r9, r9					; else initialize r9 at 0
-	JMP		index_incr
+	JMP		atoi_index
 
 index_incr:
 	INC		r9						; increment r9 (j++)
@@ -115,5 +117,7 @@ set_rax:
 	JZ		return					; if equal, jump to the return label
 	NEG		rax						; else ret = -ret
 
-return:
+return:	
+	;POP		r12
+	;POP		rbx
 	RET
