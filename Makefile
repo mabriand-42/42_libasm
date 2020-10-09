@@ -49,31 +49,30 @@ EXEBO = exebo
 all : $(NAME)
 
 .s.o:
-	nasm -f elf64 $^
+	@nasm -f elf64 $^
 
 $(NAME) : $(OBJS) 
-	ar rcs $(NAME) $(OBJS)
+	@ar rcs $(NAME) $(OBJS)
 
 run : $(NAME)
-	$(CC) -no-pie $(CFLAGS) main.c -L ./ -lasm -o $(EXE)
-	./exe
+	@$(CC) -no-pie $(CFLAGS) main.c -L ./ -lasm -o $(EXE)
+	@./exe
 
 bonus : $(OBJS) $(OBJSBO) 
-	ar rcs $(NAME) $(OBJS) $(OBJSBO)
+	@ar rcs $(NAME) $(OBJS) $(OBJSBO)
 
-run_bonus : $(NAME_BO)
-	$(CC) -no-pie $(CFLAGS) main_bonus.c -L ./ -lasm -o $(EXEBO)
-	./exebo
+run_bonus : bonus $(NAME)
+	@$(CC) -no-pie $(CFLAGS) main_bonus.c -L ./ -lasm -o $(EXEBO)
+	@./exebo
 
 clean :
-	$(RM) -rf $(NAME)
-	$(RM) -rf $(OBJS)
-	$(RM) -rf $(NAME_BO)
-	$(RM) -rf $(OBJSBO)
+	@$(RM) -rf $(NAME)
+	@$(RM) -rf $(OBJS)
+	@$(RM) -rf $(OBJSBO)
 
 fclean : clean
-	$(RM) exe
-	$(RM) exebo
+	@$(RM) exe
+	@$(RM) exebo
 
 re : fclean all
 
