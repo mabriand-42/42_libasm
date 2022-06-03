@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: vmoreau <vmoreau@student.42.fr>            +#+  +:+       +#+         #
+#    By: mabriand <mabriand@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/04/20 13:11:26 by vmoreau           #+#    #+#              #
-#    Updated: 2020/08/26 14:11:41 by mabriand         ###   ########.fr        #
+#    Updated: 2022/06/03 12:29:52 by mabriand         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,16 +14,16 @@ NAME = libasm.a
 
 ##################################### PATH #####################################
 
-NATIV = libasm_sources/native/
-BONUS = libasm_sources/bonus/
+NATIV = src/native/
+BONUS = src/bonus/
 
 #################################### SOURCES ###################################
 
 SRCS +=	$(NATIV)ft_strlen.s		$(NATIV)ft_strcpy.s		$(NATIV)ft_strcmp.s \
 		$(NATIV)ft_strdup.s		$(NATIV)ft_read.s		$(NATIV)ft_write.s 
 
-SRCSBO += 	$(BONUS)ft_list_push_front_bonus.s 			$(BONUS)ft_list_size_bonus.s \
-			$(BONUS)ft_list_remove_if_bonus.s 			$(BONUS)ft_atoi_base_bonus.s \
+SRCSBO += 	$(BONUS)ft_list_push_front_bonus.s 	$(BONUS)ft_list_size_bonus.s \
+			$(BONUS)ft_list_remove_if_bonus.s 	$(BONUS)ft_atoi_base_bonus.s \
 			$(BONUS)ft_list_sort_bonus.s
 
 ##################################### BASIC ####################################
@@ -32,7 +32,7 @@ CFLAGS 	= -Wall -Wextra -Werror
 
 CC = gcc
 
-INC = libasm_header/
+INC = inc/
 
 HEADER = $(INC)libasm.h
 

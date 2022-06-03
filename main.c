@@ -6,16 +6,15 @@
 /*   By: mabriand <mabriand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/09 11:01:23 by mabriand          #+#    #+#             */
-/*   Updated: 2020/03/10 15:10:28 by mabriand         ###   ########.fr       */
+/*   Updated: 2022/06/03 12:27:45 by mabriand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libasm_header/libasm.h"
+#include "inc/libasm.h"
 
 /*
 ** ft_strlen
 */
-
 void	ft_check_strlen(void)
 {
 	printf("\n\n%s*********************** FT_STRLEN ***********************\n\n%s", UBLUE, NC);
@@ -42,7 +41,6 @@ void	ft_check_strlen(void)
 /*
 ** ft_strcpy
 */
-
 void	ft_check_strcpy(void)
 {
 	printf("%s*********************** FT_STRCPY ***********************\n\n%s", UBLUE, NC);
@@ -101,7 +99,6 @@ void	ft_check_strcpy(void)
 /*
 ** ft_strcmp
 */
-
 void	ft_check_strcmp(void)
 {
 	printf("%s*********************** FT_STRCMP ***********************\n\n%s", UBLUE, NC);
@@ -172,7 +169,6 @@ void	ft_check_strcmp(void)
 /*
 ** ft_strdup
 */
-
 void	ft_check_strdup(void)
 {
 	printf("%s*********************** FT_STRDUP ***********************\n\n%s", UBLUE, NC);
@@ -209,7 +205,6 @@ void	ft_check_strdup(void)
 /*
 ** ft_write
 */
-
 void	ft_check_write(void)
 {
 	printf("%s*********************** FT_WRITE ************************\n\n%s", UBLUE, NC);
@@ -251,7 +246,6 @@ void	ft_check_write(void)
 /*
 ** ft_read
 */
-
 void	ft_check_read(void)
 {
 	printf("%s*********************** FT_READ *************************\n\n%s", UBLUE, NC);

@@ -6,22 +6,20 @@
 /*   By: mabriand <mabriand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/09 11:01:23 by mabriand          #+#    #+#             */
-/*   Updated: 2020/03/10 15:10:28 by mabriand         ###   ########.fr       */
+/*   Updated: 2022/06/03 12:27:24 by mabriand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libasm_header/libasm_bonus.h"
+#include "inc/libasm_bonus.h"
 
 /*
 ** Useful macro
 */
-
 # define ATOI_BASE(s, b)	i = ft_atoi_base(s, b); printf("\'%s'   [%s] = %s%d%s\n", s, b, BGREEN, i, NC);
 
 /*
 ** Useful functions
 */
-
 void	ft_print_list(t_list *list)
 {
 	if (list == NULL)
@@ -50,7 +48,6 @@ void	ft_list_clear(t_list *list)
 /*
 ** ft_atoi_base
 */
-
 void	ft_check_atoi_base(void)
 {
 	printf("%s\n\n*********************** FT_ATOI_BASE ********************\n\n%s", UCYAN, NC);
@@ -98,7 +95,6 @@ void	ft_check_atoi_base(void)
 /*
 ** ft_list_size
 */
-
 void	ft_check_list_size(void)
 {
 	printf("\n\n%s*********************** FT_LIST_SIZE ********************\n\n%s", UCYAN, NC);
@@ -133,7 +129,6 @@ void	ft_check_list_size(void)
 /*
 ** ft_list_push_front
 */
-
 void	ft_check_list_push_front(void)
 {
 	printf("\n\n%s*********************** FT_LIST_PUSH_FRONT **************\n\n%s", UCYAN, NC);
@@ -171,7 +166,6 @@ void	ft_check_list_push_front(void)
 /*
 ** ft_list_remove_if
 */
-
 void	ft_check_list_remove_if(void)
 {
 	printf("\n\n%s*********************** FT_LIST_REMOVE_IF ***************\n\n%s", UCYAN, NC);
@@ -228,7 +222,6 @@ void	ft_check_list_remove_if(void)
 /*
 ** ft_list_sort
 */
-
 void	ft_check_list_sort(void)
 {
 	printf("\n\n%s*********************** FT_LIST_SORT ***************\n\n%s", UCYAN, NC);
